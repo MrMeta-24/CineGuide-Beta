@@ -1,0 +1,4 @@
+ npm install
+  node server.js
+   npm install express
+    npm init -y

@@ -1,0 +1,65 @@
+.hidden {
+  display: none !important;
+}
+
+/* Menu lateral */
+#asside {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  transition: left 0.3s ease;
+}
+
+#asside.active {
+  left: 0;
+}
+
+#asside a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  font-size: 18px;
+}
+
+#asside a:hover {
+  background-color: #555;
+}
+
+/* Outros estilos */
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #222;
+  color: white;
+}
+
+button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+}
+
