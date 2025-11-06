@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const userRouter = express.Router();
 const db = require('../database/db');
 
-router.post('/register', (req, res) => {
+userRouter.post('/register', (req, res) => {
   const { username, email, password } = req.body;
 
   const sql = `INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)`;
@@ -18,7 +18,7 @@ router.post('/register', (req, res) => {
   });
 });
 
-router.post('/login', (req, res) => {
+userRouter.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   const sql = `SELECT * FROM usuarios WHERE email = ? AND password = ?`;
@@ -29,4 +29,4 @@ router.post('/login', (req, res) => {
   });
 });
 
-module.exports = router;
+module.exports = userRouter;
