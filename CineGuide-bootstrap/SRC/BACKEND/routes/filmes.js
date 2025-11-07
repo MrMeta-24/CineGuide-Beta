@@ -3,13 +3,54 @@ const router = express.Router();
 const db = require('../database/db');
 
 router.get('/', (req, res) => {
-  db.all('SELECT * FROM filmes', [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
+  const sql = `SELECT rowid AS id, * FROM filmes`;
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      console.error("Erro ao listar filmes:", err.message);
+      return res.status(500).json({ error: err.message });
+    }
+
     rows.forEach(row => {
+      try {
+        row.atores = row.atores ? JSON.parse(row.atores) : [];
+        row.opinioes = row.opinioes ? JSON.parse(row.opinioes) : [];
+      } catch (e) {
+        row.atores = [];
+        row.opinioes = [];
+      }
+    });
+
+    res.json(rows);
+  });
+});
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  console.log("Buscando filme com ID:", id);
+
+  const sql = `SELECT rowid AS id, * FROM filmes WHERE rowid = ?`;
+
+  db.get(sql, [id], (err, row) => {
+    if (err) {
+      console.error("Erro ao buscar filme:", err.message);
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (!row) {
+      console.warn("Filme não encontrado com ID:", id);
+      return res.status(404).json({ error: "Filme não encontrado." });
+    }
+
+    try {
       row.atores = row.atores ? JSON.parse(row.atores) : [];
       row.opinioes = row.opinioes ? JSON.parse(row.opinioes) : [];
-    });
-    res.json(rows);
+    } catch (e) {
+      row.atores = [];
+      row.opinioes = [];
+    }
+
+    res.json(row);
   });
 });
 
@@ -34,7 +75,12 @@ router.post('/', (req, res) => {
     JSON.stringify(opinioes || []),
     imagem
   ], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      console.error("Erro ao inserir filme:", err.message);
+      return res.status(500).json({ error: err.message });
+    }
+
+    console.log("Filme cadastrado com sucesso! ID:", this.lastID);
     res.json({ id: this.lastID });
   });
 });

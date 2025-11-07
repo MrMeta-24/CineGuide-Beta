@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === DESIGN SYSTEM === */
+@layer base {
+  :root {
+    --background: 234 28% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 234 20% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 234 28% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 45 100% 51%;
+    --primary-foreground: 234 28% 6%;
+
+    --secondary: 350 85% 50%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 234 20% 15%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 45 100% 51%;
+    --accent-foreground: 234 28% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 234 20% 18%;
+    --input: 234 20% 18%;
+    --ring: 45 100% 51%;
+
+    --radius: 0.75rem;
+
+    --cinema-gold: 45 100% 51%;
+    --cinema-red: 350 85% 50%;
+    --cinema-dark: 234 28% 6%;
+    --cinema-card: 234 20% 10%;
+    --cinema-border: 234 20% 18%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(45 100% 51% / 0.2), hsl(350 85% 50% / 0.2));
+    --gradient-card: linear-gradient(180deg, hsl(234 20% 12%), hsl(234 28% 8%));
+    
+    --shadow-glow: 0 0 40px hsl(45 100% 51% / 0.15);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-screen flex flex-col;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  a {
+    @apply text-primary hover:text-secondary transition-smooth;
+  }
+}
+
+/* === COMPONENTS === */
+@layer components {
+
+  /* HEADER */
+  header {
+    @apply flex items-center justify-between px-4 py-3 bg-card border-b border-border shadow-card;
+  }
+
+  header h1 {
+    @apply text-xl font-bold text-primary;
+  }
+
+  header button {
+    @apply bg-primary text-primary-foreground px-3 py-1 rounded-md hover:bg-secondary transition-smooth;
+  }
+
+  .btn-login {
+    @apply border border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground transition-smooth rounded-md px-3 py-1;
+  }
+
+  /* ASIDE MENU */
+  aside {
+    @apply fixed top-0 left-0 h-full w-60 bg-card border-r border-border transform -translate-x-full transition-smooth z-50;
+  }
+
+  aside.active {
+    @apply translate-x-0 shadow-card;
+  }
+
+  aside a {
+    @apply block px-5 py-3 text-foreground hover:bg-muted hover:text-primary transition-smooth;
+  }
+
+  .fechar-btn {
+    @apply absolute top-2 right-2 text-destructive hover:text-secondary transition-smooth;
+  }
+
+  /* CARDS DE FILMES */
+  .card {
+    @apply bg-card text-card-foreground rounded-lg overflow-hidden shadow-card hover:shadow-glow transition-smooth border border-border;
+  }
+
+  .card img {
+    @apply w-full h-52 object-cover;
+  }
+
+  .card-body {
+    @apply p-4;
+  }
+
+  .card-title {
+    @apply text-lg font-semibold text-primary mb-2;
+  }
+
+  /* FORMULÁRIOS */
+  form {
+    @apply bg-card p-6 rounded-lg shadow-card border border-border space-y-4;
+  }
+
+  input, select, textarea {
+    @apply w-full bg-input text-foreground p-2 rounded-md border border-border focus:ring-2 focus:ring-primary outline-none transition-smooth;
+  }
+
+  label {
+    @apply block font-medium mb-1;
+  }
+
+  button[type="submit"], .btn-primary {
+    @apply bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold hover:bg-secondary transition-smooth;
+  }
+
+  .btn-outline-secondary {
+    @apply border border-border text-foreground hover:bg-muted transition-smooth px-4 py-2 rounded-md;
+  }
+
+  /* FOOTER */
+  footer {
+    @apply mt-auto bg-card text-center py-3 border-t border-border text-muted-foreground;
+  }
+
+  footer a {
+    @apply text-primary hover:text-secondary transition-smooth;
+  }
+
+  /* GRID DE FILMES */
+  .grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+  }
+
+  /* GÊNEROS */
+  .genres-list {
+    @apply flex flex-wrap gap-3 mt-4;
+  }
+
+  .genres-list button {
+    @apply px-4 py-2 rounded-full bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-smooth;
+  }
+
+  /* LOGIN / CADASTRO */
+  .form-container {
+    @apply max-w-md mx-auto mt-10;
+  }
+
+  .hidden {
+    @apply hidden;
+  }
+
+  /* DETALHES DO FILME */
+  .movie-details {
+    @apply bg-card border border-border rounded-lg p-6 shadow-card max-w-3xl mx-auto mt-8;
+  }
+
+  .movie-details img {
+    @apply w-full rounded-lg mb-4;
+  }
+
+  .movie-details h2 {
+    @apply text-2xl text-primary mb-4;
+  }
+
+  .movie-details p {
+    @apply mb-2 text-muted-foreground;
+  }
+
+  .opiniao-card {
+    @apply bg-muted p-3 rounded-md mb-2 border border-border;
+  }
+
+}

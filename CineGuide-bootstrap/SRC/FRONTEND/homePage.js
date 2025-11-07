@@ -53,6 +53,7 @@ function renderFilmes(lista, container) {
   lista.forEach(filme => {
     const card = document.createElement("div");
     card.className = "card mb-3";
+    card.style.cursor = "pointer";
 
     card.innerHTML = `
       <img src="${filme.imagem || "https://via.placeholder.com/400x200?text=Sem+Imagem"}" class="card-img-top" alt="${filme.nome}">
@@ -63,6 +64,12 @@ function renderFilmes(lista, container) {
         <p class="card-text"><strong>Nota:</strong> ${filme.nota || "N/A"}</p>
       </div>
     `;
+
+    card.addEventListener("click", () => {
+      localStorage.setItem("selectedFilmId", filme.id);
+      window.location.href = "detalhes.html";
+    });
+
     container.appendChild(card);
   });
 }
