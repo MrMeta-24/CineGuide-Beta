@@ -1,0 +1,115 @@
+@import url('base.css');
+
+/* --- HEADER (Adição) --- */
+#inicio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: var(--cor-fundo-principal);
+    border-bottom: 1px solid var(--cor-fundo-card);
+}
+
+#inicio h1 {
+    color: var(--cor-primaria);
+    font-weight: bold;
+}
+
+/* Botão Menu */
+#inicio .btn-light {
+    background-color: var(--cor-fundo-card) !important;
+    color: var(--cor-texto-principal) !important;
+    border: none;
+}
+
+/* Botão Login */
+#inicio .btn-login {
+    color: var(--cor-primaria);
+    background-color: transparent;
+    border: 1px solid var(--cor-primaria);
+    padding: 8px 15px;
+    border-radius: var(--borda-raio);
+    transition: all var(--transicao-padrao);
+}
+
+#inicio .btn-login:hover {
+    background-color: var(--cor-primaria);
+    color: var(--cor-fundo-principal);
+}
+
+/* --- ASIDE / MENU LATERAL (Reutilizado) --- */
+#aside {
+    /* ... (Copie o estilo do aside de homePage.css aqui) ... */
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #0d0d0d;
+    padding: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+    transition: left var(--transicao-padrao);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+}
+
+#aside.active {
+    left: 0;
+}
+
+.fechar-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--cor-texto-principal);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#aside a {
+    display: block;
+    padding: 10px 0;
+    color: var(--cor-texto-secundario);
+    transition: color var(--transicao-padrao);
+}
+
+#aside a:hover {
+    color: var(--cor-primaria);
+}
+
+/* --- FORMULÁRIO --- */
+.card-form {
+    background-color: var(--cor-fundo-card);
+    padding: 40px;
+    border-radius: var(--borda-raio);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.card-form h2 {
+    color: var(--cor-primaria) !important;
+}
+
+/* Espaçamento extra no formulário */
+#formFilme .g-3 {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 1.5rem;
+}
+
+/* Estilo para os labels */
+.card-form .form-label {
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+}
+
+/* Botão Voltar/Cancelar */
+.btn-outline-secondary {
+    color: var(--cor-texto-secundario) !important;
+    border-color: var(--cor-texto-secundario) !important;
+    transition: all var(--transicao-padrao);
+}
+
+.btn-outline-secondary:hover {
+    color: var(--cor-fundo-principal) !important;
+    background-color: var(--cor-texto-secundario) !important;
+}

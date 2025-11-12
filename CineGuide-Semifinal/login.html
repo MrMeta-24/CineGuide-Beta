@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CineGuide</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="STYLES/login.css" />
+  <script defer src="SRC/FRONTEND/login.js"></script>
+</head>
+<body>
+
+  <header class="d-flex justify-content-between p-3 bg-dark text-white">
+    <button class="btn btn-primary" onclick="toggleAside()">Menu</button>
+    <h1>CineGuide</h1>
+    <button id="logoutBtn" class="btn btn-danger" style="display: none;">Logout</button>
+  </header>
+
+  <aside id="asside" class="position-fixed bg-dark text-white p-3">
+    <button class="btn btn-danger" onclick="fecharAside()">X</button>
+    <div class="mt-3">
+      <a href="homePage.html">Home</a>
+      <a href="adicao.html">Adicionar Filme</a>
+      <a href="search.html">Buscar Filme</a>
+    </div>
+  </aside>
+
+  <main class="container mt-5">
+    <div class="form-container" id="loginForm">
+      <h2>Login</h2>
+      <form id="login">
+        <div class="mb-3">
+          <label for="loginEmail" class="form-label">Email:</label>
+          <input type="email" id="loginEmail" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="loginPassword" class="form-label">Senha:</label>
+          <input type="password" id="loginPassword" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+      <p class="mt-3">Não tem uma conta? <span class="text-primary" role="button" onclick="toggleForm()">Cadastre-se aqui</span></p>
+    </div>
+
+    <div class="form-container hidden" id="registerForm">
+      <h2>Cadastro</h2>
+      <form id="register">
+        <div class="mb-3">
+          <label for="registerUsername" class="form-label">Usuário:</label>
+          <input type="text" id="registerUsername" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="registerEmail" class="form-label">Email:</label>
+          <input type="email" id="registerEmail" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="registerPassword" class="form-label">Senha:</label>
+          <input type="password" id="registerPassword" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </form>
+      <p class="mt-3">Já tem uma conta? <span class="text-primary" role="button" onclick="toggleForm()">Faça login aqui</span></p>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white p-3 mt-5 text-center">
+    <a href="https://github.com/MrMeta-24" class="text-white">Meu GitHub</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

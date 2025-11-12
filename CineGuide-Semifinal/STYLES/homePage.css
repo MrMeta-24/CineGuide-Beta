@@ -1,0 +1,127 @@
+@import url('base.css'); /* Importe a base se estiver em um arquivo separado */
+
+/* --- HEADER / NAVEGAÇÃO --- */
+#inicio {
+    background-color: var(--cor-fundo-principal) !important;
+    border-bottom: 1px solid var(--cor-fundo-card);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+#inicio h1 {
+    font-weight: 800;
+    color: var(--cor-primaria);
+}
+
+/* Busca */
+#searchForm {
+    width: 300px; /* Largura fixa para a barra de busca */
+}
+
+/* Botão de Menu (Aside) */
+#inicio .btn-light {
+    background-color: var(--cor-fundo-card) !important;
+    color: var(--cor-texto-principal) !important;
+    border: none !important;
+}
+
+/* Botão Login */
+.btn-login {
+    color: var(--cor-primaria) !important;
+    border-color: var(--cor-primaria) !important;
+    transition: background-color var(--transicao-padrao), color var(--transicao-padrao);
+}
+
+.btn-login:hover {
+    background-color: var(--cor-primaria) !important;
+    color: var(--cor-fundo-principal) !important;
+}
+
+/* --- ASIDE / MENU LATERAL --- */
+#aside {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #0d0d0d;
+    padding: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+    transition: left var(--transicao-padrao);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+}
+
+#aside.active {
+    left: 0;
+}
+
+.fechar-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--cor-texto-principal);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#aside a {
+    display: block;
+    padding: 10px 0;
+    color: var(--cor-texto-secundario);
+    transition: color var(--transicao-padrao);
+}
+
+#aside a:hover {
+    color: var(--cor-primaria);
+}
+
+/* --- SECTIONS DE FILMES --- */
+.section h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    border-left: 5px solid var(--cor-primaria);
+    padding-left: 10px;
+    color: var(--cor-texto-principal);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+/* Estilo para os cards dentro do grid */
+.grid .card {
+    cursor: pointer;
+}
+
+.grid .card-img-top {
+    height: 300px; 
+    object-fit: cover;
+}
+
+/* --- GÊNEROS (Tags) --- */
+.genres-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.genres-list button {
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-texto-principal);
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--cor-secundaria);
+    cursor: pointer;
+    transition: all var(--transicao-padrao);
+}
+
+.genres-list button:hover {
+    background-color: var(--cor-primaria);
+    color: var(--cor-fundo-principal);
+    border-color: var(--cor-primaria);
+}

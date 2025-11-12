@@ -1,0 +1,102 @@
+@import url('base.css');
+
+/* --- HEADER e ASIDE (Login) --- */
+header {
+    background-color: var(--cor-fundo-principal) !important;
+    border-bottom: 1px solid var(--cor-fundo-card);
+}
+
+header h1 {
+    color: var(--cor-primaria);
+    font-weight: bold;
+}
+
+#asside {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #0d0d0d !important;
+    padding: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+    transition: left var(--transicao-padrao);
+    z-index: 1050;
+}
+
+#asside.active {
+    left: 0;
+}
+
+#asside a {
+    display: block;
+    padding: 10px 0;
+    color: var(--cor-texto-secundario);
+    transition: color var(--transicao-padrao);
+}
+
+#asside a:hover {
+    color: var(--cor-primaria);
+}
+
+/* Botão Menu */
+header .btn-primary, header .btn-danger {
+    border-radius: var(--borda-raio);
+}
+
+/* --- TELA DE LOGIN --- */
+.main {
+    min-height: calc(100vh - 120px); /* Para centralizar o formulário */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    background-color: var(--cor-fundo-card);
+    padding: 40px;
+    border-radius: var(--borda-raio);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+}
+
+.form-container.hidden {
+    display: none;
+}
+
+.form-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--cor-texto-principal);
+    font-weight: 600;
+}
+
+.form-label {
+    text-align: left;
+    display: block;
+    color: var(--cor-texto-secundario);
+}
+
+.form-container .form-control {
+    padding: 12px;
+}
+
+/* Botão Entrar/Registrar */
+.form-container .btn-primary {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.form-container p {
+    color: var(--cor-texto-secundario);
+    font-size: 0.95rem;
+}
+
+.form-container .text-primary {
+    color: var(--cor-primaria) !important;
+    cursor: pointer;
+    font-weight: bold;
+}
