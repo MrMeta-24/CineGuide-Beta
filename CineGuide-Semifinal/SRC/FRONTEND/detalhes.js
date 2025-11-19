@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const user = JSON.parse(localStorage.getItem("isLoggedIn"));
+  const userString = localStorage.getItem("isLoggedIn");
+  const user = userString ? JSON.parse(userString) : null;
 
   let filme;
   
@@ -32,36 +33,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     </div>
   `;
 
+  // Renderiza as opiniões existentes
   renderOpinioes(filme.opinioes);
 
   document.getElementById("formOpiniao").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    if (!user) {
-      alert("Você precisa estar logado para opinar.");
+    if (!user || !user.username) {
+      alert("Você precisa estar logado para opinar. Por favor, faça login.");
       return;
     }
 
+    const notaInput = document.getElementById("nota");
+    const comentarioInput = document.getElementById("comentario");
+    
     const novaOpiniao = {
       usuario: user.username,
-      comentario: document.getElementById("comentario").value.trim(),
-      nota: Number(document.getElementById("nota").value)
+      comentario: comentarioInput.value.trim(),
+      nota: Number(notaInput.value)
     };
 
-    if (!novaOpiniao.comentario || isNaN(novaOpiniao.nota)) {
-      alert("Preencha todos os campos corretamente.");
+    if (!novaOpiniao.comentario || isNaN(novaOpiniao.nota) || novaOpiniao.nota < 0 || novaOpiniao.nota > 10) {
+      alert("Preencha todos os campos corretamente. A nota deve ser entre 0 e 10.");
       return;
     }
 
-    const res = await fetch(`http://localhost:5500/api/filmes/${filmeId}/opiniao`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(novaOpiniao)
-    });
+    try {
+        const res = await fetch(`http://localhost:5500/api/filmes/${filmeId}/opiniao`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novaOpiniao)
+        });
 
-    if (!res.ok) return alert("Erro ao salvar opinião.");
-    alert("Opinião salva com sucesso!");
-    location.reload();
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Erro desconhecido ao salvar opinião.");
+        }
+        
+        alert("Opinião salva com sucesso!");
+        notaInput.value = '';
+        comentarioInput.value = '';
+        
+        location.reload(); 
+
+    } catch (error) {
+        console.error("Erro ao enviar opinião:", error.message);
+        alert(`Erro ao salvar opinião: ${error.message}`);
+    }
   });
 });
 
@@ -74,7 +92,7 @@ function renderOpinioes(opinioes) {
 
   container.innerHTML = opinioes.map(o => `
     <div class="border rounded p-3 mb-2">
-      <strong>${o.usuario}</strong> — Nota: ${o.nota}<br>
+      <strong>${o.usuario}</strong> — Nota: ${o.nota?.toFixed(1) || "S/N"}<br>
       <p>${o.comentario}</p>
     </div>
   `).join("");

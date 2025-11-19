@@ -62,7 +62,7 @@
 #listaOpinioes .border {
     border-color: #444444 !important;
     background-color: #242424;
-    color: var(--cor-texto-secundario);
+    color: var(--cor-texto-principal);
 }
 
 #listaOpinioes strong {
