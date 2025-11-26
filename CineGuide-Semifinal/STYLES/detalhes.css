@@ -42,8 +42,13 @@
     margin-bottom: 15px;
 }
 
+
+#filmeDetalhes p {
+    color: whitesmoke;
+}
+
 #filmeDetalhes strong {
-    color: var(--cor-texto-principal);
+    color: rgb(255, 212, 72);
 }
 
 /* Formulário de Opinião */

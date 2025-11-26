@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const router = express.Router();
 const db = require('../database/db');
 
@@ -14,9 +14,8 @@ function processarFilme(row) {
   }
 }
 
-
 router.get('/', (req, res) => {
-  const sql = `SELECT rowid AS id, * FROM filmes`;
+  const sql = `SELECT * FROM filmes`;
 
   db.all(sql, [], (err, rows) => {
     if (err) {
@@ -25,36 +24,25 @@ router.get('/', (req, res) => {
     }
 
     rows.forEach(processarFilme);
-
     res.json(rows);
   });
 });
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  console.log("Buscando filme com ID:", id);
-
-  const sql = `SELECT rowid AS id, * FROM filmes WHERE rowid = ?`;
+  const sql = `SELECT * FROM filmes WHERE id = ?`;
 
   db.get(sql, [id], (err, row) => {
-    if (err) {
-      console.error("Erro ao buscar filme:", err.message);
-      return res.status(500).json({ error: err.message });
-    }
-
-    if (!row) {
-      console.warn("Filme não encontrado com ID:", id);
-      return res.status(404).json({ error: "Filme não encontrado." });
-    }
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ error: "Filme não encontrado." });
 
     processarFilme(row);
-
     res.json(row);
   });
 });
 
 router.post('/', (req, res) => {
-  const { nome, diretor, roteirista, atores, genero, classificacao, nota, sinopse, opinioes, imagem } = req.body;
+  const { nome, diretor, roteirista, atores, genero, classificacao, sinopse, opinioes, imagem } = req.body;
 
   const sql = `
     INSERT INTO filmes 
@@ -69,39 +57,64 @@ router.post('/', (req, res) => {
     JSON.stringify(atores || []),
     genero,
     classificacao,
-    nota,
+    null,
     sinopse,
     JSON.stringify(opinioes || []),
     imagem
   ], function(err) {
-    if (err) {
-      console.error("Erro ao inserir filme:", err.message);
-      return res.status(500).json({ error: err.message });
-    }
-
-    console.log("Filme cadastrado com sucesso! ID:", this.lastID);
+    if (err) return res.status(500).json({ error: err.message });
     res.json({ id: this.lastID });
   });
 });
 
-router.delete('/api/delete/id', (req, res) => {
+router.post('/:id/opiniao', (req, res) => {
   const { id } = req.params;
-  console.log("Tentativa de apagar filme com ID:", id);
+  const { usuario, comentario, nota } = req.body;
 
-  const sql = `DELETE FROM filmes WHERE rowid = ?`;
+  if (!usuario || !comentario || typeof nota !== "number") {
+    return res.status(400).json({ error: "Dados inválidos." });
+  }
 
-  db.run(sql, [id], function(err) {
-    if (err) {
-      console.error("Erro ao apagar filme:", err.message);
-      return res.status(500).json({ error: err.message });
+  db.get(`SELECT * FROM filmes WHERE id = ?`, [id], (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ error: "Filme não encontrado." });
+
+    let opinioes = [];
+    try {
+      opinioes = row.opinioes ? JSON.parse(row.opinioes) : [];
+    } catch {
+      opinioes = [];
     }
 
-    if (this.changes === 0) {
-      console.warn("Nenhum filme encontrado para apagar com ID:", id);
-      return res.status(404).json({ error: "Filme não encontrado para apagar." });
-    }
+    opinioes.push({ usuario, comentario, nota });
 
-    console.log(`Filme com ID ${id} apagado com sucesso.`);
+    const notasValidas = opinioes.map(o => Number(o.nota)).filter(n => !isNaN(n));
+    const media = notasValidas.length ? notasValidas.reduce((a,b) => a+b, 0)/notasValidas.length : null;
+
+    const sqlUpdate = `
+      UPDATE filmes 
+      SET opinioes = ?, nota = ?
+      WHERE id = ?
+    `;
+
+    db.run(sqlUpdate, [JSON.stringify(opinioes), media, id], function (err2) {
+      if (err2) return res.status(500).json({ error: err2.message });
+
+      res.json({
+        message: "Opinião adicionada com sucesso!",
+        novaMedia: media,
+        opinioes
+      });
+    });
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  db.run(`DELETE FROM filmes WHERE id = ?`, [id], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) return res.status(404).json({ error: "Filme não encontrado para apagar." });
+
     res.json({ message: `Filme com ID ${id} apagado com sucesso.` });
   });
 });

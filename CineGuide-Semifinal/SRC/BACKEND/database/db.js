@@ -20,7 +20,7 @@ db.serialize(() => {
       atores TEXT,
       genero TEXT NOT NULL,
       classificacao TEXT,
-      nota REAL,
+      nota REAL DEFAULT NULL,
       sinopse TEXT,
       opinioes TEXT,
       imagem TEXT
